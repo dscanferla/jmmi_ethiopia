@@ -393,7 +393,11 @@ get.cleaning.log <- function(x, y){
   cl <- data.frame()
   if (is.na(quantity.new) & is.na(unit.new) & is.na(price.new)){
     # all new values are NAs -> remove price
-    cl <- rbind(cl, get.entry.log(uuid, item, NA, NA, NA, NA, NA))
+    if (item %in% c("water", "water_5km", "water_10km")){
+      cl <- rbind(cl, get.entry.log.water(uuid, item, NA, NA))
+    } else{
+      cl <- rbind(cl, get.entry.log(uuid, item, NA, NA, NA, NA, NA))
+    }
   } else if (quantity.old!=quantity.new | unit.old!=unit.new | price.old!=price.new){
     if (item %in% c("water", "water_5km", "water_10km")){
       cl <- rbind(cl, get.entry.log.water(uuid, item, quantity.new, price.new))
